@@ -1,0 +1,13 @@
+html, body, h1, body > div {
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+  background: 'gray';
+
+  font-family: sans-serif;
+}
+
+a:visited, a:hover, a {
+  color: rgb(233,137,27);
+}
