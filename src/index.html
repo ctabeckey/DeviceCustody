@@ -3,11 +3,11 @@
 <head>
     <title>Device Custody</title>
     <link rel="stylesheet" type="text/css" href="css/site.css">
-    <script src="js/site.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
 </head>
 
-<body onload="initialize()">
+<body>
     Device<br/>
     Device Manufacturer: <select id="dev-mfr"><option>Apple</option><option>Dell</option><option>Lenovo</option></select><br/>
     Device Model: <input type="text" id="dev-mdl" maxlength="50"/><br/>
@@ -24,63 +24,14 @@
     <button id="create-new-exec" onclick="createExec()">Create</button>
     <hr/>
 
-    <script>
-        var web3js;
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
 
-        var deviceManufacturer;
-        var deviceModel;
-        var deviceSerialNumber;
-        var deviceContract;
-
-        function initialize() {
-
-            // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-            if (typeof web3 !== 'undefined') {
-                console.log('web3 available through MetaMask');
-
-                if(!web3.isConnected()) {
-                   window.alert("Not connected to an Ethereum node");
-                } else {
-                // Use Mist/MetaMask's provider
-                   web3js = new Web3(web3.currentProvider);
-
-                   console.log("Connected to an Ethereum node.");
-                }
-            } else {
-                console.log('Please install MetaMask or use a Web3 enabled browser.');
-            }
-
-            initContract();
-        }
-
-        function initContract() {
-            console.log('Initializing contract');
-            var json = $.getJSON("contracts/DeviceCustody.json");
-            console.log('Contract retreived, = ' + json);
-            deviceContract = new web3.eth.Contract(json.abi);
-            deviceContract.options.address = '0x156d3560d6eb6873962d241c0d602e7670fe8c7c';
-            console.log('Setting provider for contract');
-            deviceContract.setProvider(web3js);
-            console.log('Contrcat initialized');
-        }
-
-        function createDevice() {
-            var mfr = document.getElementById('dev-mfr').value;
-            var mdl = document.getElementById('dev-mdl').value;
-            var sn = document.getElementById('dev-sn').value;
-
-            console.log('manufacturer=' + mfr + ', model=' + mdl + ', serial number =' + sn);
-            var index = deviceCustody.createDevice(mfr, mdl, sn);
-            console.log("Created device index " + index);
-        }
-
-        function createExec() {
-            var name = document.getElementById('exec-name').value;
-            var location = document.getElementById('exec-location').value;
-            var hashAlgo = document.getElementById('exec-algo').value;
-            var hashValue = document.getElementById('exec-hash').value;
-        }
-    </script>
 </body>
 </html>
 
